@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost:5000/api/events';
+const API_URL = 'https://eventease-backend-ime3.onrender.com/api/events';
 
 function EventDetails() {
   const { id } = useParams();

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EventCard from '../components/EventCard';
 
-const API_URL = 'http://localhost:5000/api/events';
+const API_URL = 'https://eventease-backend-ime3.onrender.com/api/events';
 
 function EventList() {
   const [events, setEvents] = useState([]);
@@ -35,7 +35,7 @@ function EventList() {
       .catch((err) => {
         if (err.message && err.message.toLowerCase().includes('fetch')) {
           setError(
-            'Cannot connect to backend server. Please make sure your backend is running on http://localhost:5000 (Open terminal, cd backend, and run "npm start").'
+            'Cannot connect to backend server. Please make sure your backend is running on https://eventease-backend-ime3.onrender.com (Open terminal, cd backend, and run "npm start").'
           );
         } else {
           setError(err.message || 'Error connecting to server.');

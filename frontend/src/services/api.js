@@ -3,7 +3,7 @@
  * Centralizes all HTTP communication with the Express/MongoDB backend.
  */
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://eventease-backend-ime3.onrender.com/api';
 
 /**
  * Generic Fetch wrapper with JSON parsing and error extraction
@@ -37,7 +37,7 @@ async function request(endpoint, options = {}) {
     return data;
   } catch (error) {
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      const connErr = new Error('Cannot connect to EventEase backend server. Please verify backend is running on http://localhost:5000');
+      const connErr = new Error('Cannot connect to EventEase backend server. Please verify backend is running on https://eventease-backend-ime3.onrender.com');
       connErr.status = 503;
       throw connErr;
     }

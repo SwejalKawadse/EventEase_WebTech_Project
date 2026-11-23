@@ -202,7 +202,7 @@ npm start
    Database Name: eventease
    Connection State: Ready (readyState = 1)
 ====================================================
-🚀 EventEase Server running on http://localhost:5000
+🚀 EventEase Server running on https://eventease-backend-ime3.onrender.com
 ```
 
 #### Terminal 2 — Frontend Application:
@@ -283,4 +283,4 @@ npm run start-frontend
 - `useNavigate`: Programmatically redirects users through the multi-step booking stepper.
 
 ### 4. How do frontend and backend communicate?
-**Answer:** Communication occurs over asynchronous HTTP using JSON. The frontend uses the centralized service `frontend/src/services/api.js` which wraps `fetch()`. It sends requests with headers `'Content-Type': 'application/json'` to `http://localhost:5000/api`. The Express backend processes the request through CORS and `express.json()` body-parser middleware, routes it to the matching controller, interacts with MongoDB through Mongoose models, and returns JSON responses with appropriate HTTP status codes (`200 OK`, `201 Created`, `400 Bad Request`, `409 Conflict`, `500 Server Error`).
+**Answer:** Communication occurs over asynchronous HTTP using JSON. The frontend uses the centralized service `frontend/src/services/api.js` which wraps `fetch()`. It sends requests with headers `'Content-Type': 'application/json'` to `https://eventease-backend-ime3.onrender.com/api`. The Express backend processes the request through CORS and `express.json()` body-parser middleware, routes it to the matching controller, interacts with MongoDB through Mongoose models, and returns JSON responses with appropriate HTTP status codes (`200 OK`, `201 Created`, `400 Bad Request`, `409 Conflict`, `500 Server Error`).
