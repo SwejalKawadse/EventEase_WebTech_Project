@@ -20,10 +20,25 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Core Middleware
+// app.use(cors({
+//   origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
+//   credentials: true,
+// }));
+// app.use(express.json());
+
+// Core Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
-  credentials: true,
+  origin: [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:3000',
+    'https://event-ease-web-tech-project.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
+
 app.use(express.json());
 
 // Request Logger for Viva & Debugging demonstration
