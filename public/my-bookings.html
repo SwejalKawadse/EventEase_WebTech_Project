@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings — EventEase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <span>EventEase</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="venues.html" class="nav-link">Venues</a>
+        <a href="my-bookings.html" class="nav-link active">My Bookings</a>
+        <a href="admin.html" class="nav-link">Admin Console</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="events.html" class="btn btn-primary">Plan an Event</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="section">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <div class="subtitle">Reservation Portal</div>
+        <h2>My Celebrations</h2>
+        <p>View, manage, and track your active and past event bookings.</p>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="card mb-lg" style="max-width: 650px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; gap: 0.75rem; align-items: flex-end;">
+          <div class="form-group" style="flex: 1; margin-bottom: 0;">
+            <label class="form-label">Search by Email or Phone Number</label>
+            <input type="text" id="my-search-input" class="form-control" placeholder="e.g. aarav.sharma@example.com">
+          </div>
+          <button class="btn btn-primary" onclick="searchMyBookings()">Search</button>
+          <button class="btn btn-secondary" onclick="loadAllBookings()">Show All</button>
+        </div>
+      </div>
+
+      <!-- BOOKINGS LIST CONTAINER -->
+      <div id="my-bookings-list" class="grid-2">
+        <!-- Rendered dynamically by my-bookings.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+          <p>Loading bookings...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOOKING DETAIL MODAL -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="det-id">Booking Details</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeDetailModal()">✕</button>
+      </div>
+      
+      <div id="det-content">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="closeDetailModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

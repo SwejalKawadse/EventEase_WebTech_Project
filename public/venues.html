@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 2: Choose Venue — EventEase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <span>EventEase</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="venues.html" class="nav-link active">Venues</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+        <a href="admin.html" class="nav-link">Admin Console</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="events.html" class="btn btn-primary">Plan an Event</a>
+        <button class="mobile-toggle" aria-label="Toggle Navigation Menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROGRESS STEPPER BAR -->
+  <nav class="progress-stepper" aria-label="Booking Steps">
+    <div class="container stepper-wrapper">
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info">
+          <span class="step-title">Event</span>
+          <span class="step-status" id="selected-event-label">Selected</span>
+        </div>
+      </div>
+      <div class="step-item active" aria-current="step">
+        <div class="step-number">02</div>
+        <div class="step-info">
+          <span class="step-title">Venue</span>
+          <span class="step-status">Choose Space</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">03</div>
+        <div class="step-info">
+          <span class="step-title">Customize</span>
+          <span class="step-status">Live Pricing</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">04</div>
+        <div class="step-info">
+          <span class="step-title">Review</span>
+          <span class="step-status">Summary</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">05</div>
+        <div class="step-info">
+          <span class="step-title">Confirmed</span>
+          <span class="step-status">Receipt</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="section">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <div class="subtitle">Step 2 of 5</div>
+        <h2>Find a place worth celebrating in.</h2>
+        <p>Browse handpicked architectural venues matched to your guest count and aesthetic.</p>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="card mb-lg" style="padding: 1.25rem;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1rem; align-items: end;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="search-input" class="form-label">Search Location or Venue</label>
+            <input type="text" id="search-input" class="form-control" placeholder="e.g. Pune, Bandra, Beachfront..." oninput="filterVenues()">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="filter-event-type" class="form-label">Event Type</label>
+            <select id="filter-event-type" class="form-control" onchange="filterVenues()">
+              <option value="All">All Occasions</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Party">Party</option>
+              <option value="Graduation">Graduation</option>
+              <option value="Corporate">Corporate</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="filter-capacity" class="form-label">Min Guests</label>
+            <input type="number" id="filter-capacity" class="form-control" placeholder="e.g. 100" min="1" oninput="filterVenues()">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="filter-max-price" class="form-label">Max Starting Price</label>
+            <select id="filter-max-price" class="form-control" onchange="filterVenues()">
+              <option value="">Any Price</option>
+              <option value="35000">Under ₹35,000</option>
+              <option value="50000">Under ₹50,000</option>
+              <option value="75000">Under ₹75,000</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENUES MARKETPLACE GRID -->
+      <div class="grid-3" id="venues-grid" aria-live="polite">
+        <!-- Rendered dynamically by venues.js -->
+        <div class="card skeleton" style="height: 380px;"></div>
+        <div class="card skeleton" style="height: 380px;"></div>
+        <div class="card skeleton" style="height: 380px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- VENUE DETAILS MODAL -->
+  <div class="modal-overlay" id="venue-modal" role="dialog" aria-modal="true" aria-labelledby="modal-venue-name">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="modal-venue-name">Venue Name</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeVenueModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div style="height: 220px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1rem;">
+        <img id="modal-venue-img" src="" alt="Venue showcase image" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <p id="modal-venue-location" style="font-weight: 600; color: var(--primary-terracotta); margin-bottom: 0.5rem;"></p>
+      <p id="modal-venue-desc" style="margin-bottom: 1rem;"></p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; background: var(--surface-beige); padding: 1rem; border-radius: var(--radius-md);">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Guest Capacity</span>
+          <strong id="modal-venue-capacity" style="display: block; font-size: 1.1rem;">Up to 250</strong>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Starting Base Price</span>
+          <strong id="modal-venue-price" style="display: block; font-size: 1.1rem; color: var(--primary-terracotta);">₹35,000</strong>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h4 style="margin-bottom: 0.5rem;">Facilities & Amenities</h4>
+        <div id="modal-venue-facilities" style="display: flex; flex-wrap: wrap; gap: 0.35rem;"></div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button class="btn btn-secondary" onclick="closeVenueModal()">Close</button>
+        <button id="modal-select-btn" class="btn btn-primary" onclick="confirmVenueSelection()">
+          <span>Customize Event</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 EventEase Planning System — Web Technology College Project</p>
+      <div style="display: flex; gap: 1rem;">
+        <a href="admin.html" style="font-weight: 600; color: var(--primary-terracotta);">Admin Console</a>
+        <a href="my-bookings.html">My Bookings</a>
+      </div>
+    </div>
+  </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

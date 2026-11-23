@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Console — EventEase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <span>EventEase <span style="font-size: 0.75rem; text-transform: uppercase; background: var(--primary-terracotta); color: white; padding: 0.15rem 0.5rem; border-radius: var(--radius-full); font-family: var(--font-sans); margin-left: 0.5rem;">Admin</span></span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="venues.html" class="nav-link">Venues</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+        <a href="admin.html" class="nav-link active">Admin Console</a>
+      </nav>
+
+      <div class="nav-cta">
+        <button class="btn btn-primary btn-sm" onclick="openAddVenueModal()">
+          <span class="material-symbols-outlined">add</span>
+          <span>Add Venue</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="section">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <div class="subtitle">Administrative Control & Analytics</div>
+        <h2>Dashboard & Event-Driven Engine Log</h2>
+        <p>Monitor customer reservations, update booking statuses, manage venues, and audit live JavaScript event logs.</p>
+      </div>
+
+      <!-- KPI DASHBOARD CARDS -->
+      <div class="admin-stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-bookings">0</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-pending-bookings">0</div>
+          <div class="stat-label">Pending Approval</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-customers">0</div>
+          <div class="stat-label">Total Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total-revenue" style="font-size: 1.6rem;">₹0</div>
+          <div class="stat-label">Total Platform Revenue</div>
+        </div>
+      </div>
+
+      <!-- ADMIN TABS -->
+      <div style="display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+        <button class="btn btn-secondary btn-sm active-tab" id="tab-btn-bookings" onclick="switchAdminTab('bookings')">Bookings Management</button>
+        <button class="btn btn-secondary btn-sm" id="tab-btn-venues" onclick="switchAdminTab('venues')">Venue Marketplace</button>
+        <button class="btn btn-secondary btn-sm" id="tab-btn-log" onclick="switchAdminTab('log')">JavaScript Event Activity Log</button>
+      </div>
+
+      <!-- TAB 1: BOOKINGS TABLE -->
+      <div id="tab-content-bookings">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Event Type</th>
+                <th>Venue</th>
+                <th>Event Date</th>
+                <th>Guests</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-bookings-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: VENUES MANAGEMENT TABLE -->
+      <div id="tab-content-venues" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3>Venue Directory</h3>
+          <button class="btn btn-primary btn-sm" onclick="openAddVenueModal()">+ Add New Venue</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Venue Name</th>
+                <th>Location</th>
+                <th>Capacity</th>
+                <th>Starting Price</th>
+                <th>Rating</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-venues-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: EDA EVENT LOG TIMELINE -->
+      <div id="tab-content-log" style="display: none;">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+            <div>
+              <h3>JavaScript Event Activity Trail</h3>
+              <p style="font-size: 0.85rem;">Real-time event logs generated by the JavaScript event-driven booking flow.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="fetchEventLogs()">Refresh Log</button>
+          </div>
+
+          <div class="timeline" id="admin-event-timeline">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ADD / EDIT VENUE MODAL -->
+  <div class="modal-overlay" id="venue-form-modal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="venue-modal-title">Add New Venue</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeVenueFormModal()">✕</button>
+      </div>
+
+      <form id="venue-form" onsubmit="saveVenueForm(event)">
+        <input type="hidden" id="vform-id">
+        <div class="form-group">
+          <label class="form-label">Venue Name *</label>
+          <input type="text" id="vform-name" class="form-control" required placeholder="e.g. The Grand Palace">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location (City/Area) *</label>
+          <input type="text" id="vform-location" class="form-control" required placeholder="e.g. Koregaon Park, Pune">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea id="vform-desc" class="form-control" placeholder="Short description of the architectural venue..."></textarea>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Max Guest Capacity *</label>
+            <input type="number" id="vform-capacity" class="form-control" required value="250">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Starting Price (₹) *</label>
+            <input type="number" id="vform-price" class="form-control" required value="35000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" id="vform-image" class="form-control" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeVenueFormModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Venue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

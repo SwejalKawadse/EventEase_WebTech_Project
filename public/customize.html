@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 3: Customize Event & Live Pricing — EventEase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="has-mobile-bar">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <span>EventEase</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="venues.html" class="nav-link">Venues</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+        <a href="admin.html" class="nav-link">Admin Console</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="events.html" class="btn btn-primary">Plan an Event</a>
+        <button class="mobile-toggle" aria-label="Toggle Navigation Menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROGRESS STEPPER BAR -->
+  <nav class="progress-stepper" aria-label="Booking Steps">
+    <div class="container stepper-wrapper">
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info">
+          <span class="step-title">Event</span>
+          <span class="step-status" id="badge-event">Selected</span>
+        </div>
+      </div>
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info">
+          <span class="step-title">Venue</span>
+          <span class="step-status" id="badge-venue">Selected</span>
+        </div>
+      </div>
+      <div class="step-item active" aria-current="step">
+        <div class="step-number">03</div>
+        <div class="step-info">
+          <span class="step-title">Customize</span>
+          <span class="step-status">Live Pricing</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">04</div>
+        <div class="step-info">
+          <span class="step-title">Review</span>
+          <span class="step-status">Summary</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">05</div>
+        <div class="step-info">
+          <span class="step-title">Confirmed</span>
+          <span class="step-status">Receipt</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="section">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <div class="subtitle">Step 3 of 5</div>
+        <h2>Personalize Every Detail</h2>
+        <p>Choose your decor, gastronomy, and live entertainment with immediate live price calculation.</p>
+      </div>
+
+      <div class="customization-layout">
+        
+        <!-- LEFT: CUSTOMIZATION FORM & VISUAL CARDS -->
+        <div>
+          
+          <!-- DATE, TIME & GUEST COUNT FORM -->
+          <div class="card custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">calendar_today</span>
+              <span>Date, Time & Guest Count</span>
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="input-date" class="form-label">Event Date *</label>
+                <input type="date" id="input-date" class="form-control" onchange="validateAndCalculate()">
+                <div class="field-error" id="error-date">Please select a future date.</div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="input-start-time" class="form-label">Start Time</label>
+                <input type="time" id="input-start-time" class="form-control" value="18:00" onchange="validateAndCalculate()">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="input-end-time" class="form-label">End Time</label>
+                <input type="time" id="input-end-time" class="form-control" value="23:00" onchange="validateAndCalculate()">
+                <div class="field-error" id="error-time">End time must be after start time.</div>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="input-guests" class="form-label">Number of Guests *</label>
+                <input type="number" id="input-guests" class="form-control" value="100" min="1" max="1000" oninput="validateAndCalculate()">
+                <div class="field-error" id="error-guests">Guests must be between 1 and venue capacity.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DECORATION PACKAGES -->
+          <div class="custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">filter_vintage</span>
+              <span>Decoration Packages</span>
+            </h3>
+            <div class="option-cards-grid" id="decor-options" role="radiogroup" aria-label="Decoration Packages">
+              <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectDecor('Basic', 5000, this)" onkeydown="if(event.key==='Enter'||event.key===' ') selectDecor('Basic', 5000, this)">
+                <div class="option-header">
+                  <span class="option-name">Basic Package</span>
+                  <span class="option-price">₹5,000</span>
+                </div>
+                <div class="option-desc">Minimal floral drapes, warm ambient lighting, and entrance arch setup.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectDecor('Premium', 12000, this)" onkeydown="if(event.key==='Enter'||event.key===' ') selectDecor('Premium', 12000, this)">
+                <div class="option-header">
+                  <span class="option-name">Premium Package</span>
+                  <span class="option-price">₹12,000</span>
+                </div>
+                <div class="option-desc">Fresh floral centerpieces, stage backdrop, fairy light canopy, and photo booth.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectDecor('Luxury', 20000, this)" onkeydown="if(event.key==='Enter'||event.key===' ') selectDecor('Luxury', 20000, this)">
+                <div class="option-header">
+                  <span class="option-name">Luxury Atelier</span>
+                  <span class="option-price">₹20,000</span>
+                </div>
+                <div class="option-desc">Bespoke thematic stage installation, crystal chandeliers, floral walkways, and custom lighting.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- THEME SELECTION -->
+          <div class="custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">palette</span>
+              <span>Event Theme</span>
+            </h3>
+            <div class="option-cards-grid" id="theme-options" role="radiogroup" aria-label="Event Theme">
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectTheme('Floral', this)">
+                <div class="option-name">Floral Blossom</div>
+                <div class="option-desc">Rose gold and soft pastel florals.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectTheme('Royal', this)">
+                <div class="option-name">Royal Heritage</div>
+                <div class="option-desc">Deep crimson, gold leaf, and velvet.</div>
+              </div>
+              <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectTheme('Minimal', this)">
+                <div class="option-name">Modern Minimal</div>
+                <div class="option-desc">Warm ivory, olive charcoal, and clean geometry.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectTheme('Bollywood', this)">
+                <div class="option-name">Bollywood Glam</div>
+                <div class="option-desc">Vibrant colors, marigold, and neon signs.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectTheme('Kids', this)">
+                <div class="option-name">Whimsical Kids</div>
+                <div class="option-desc">Playful balloon arches and fairytale props.</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectTheme('Custom', this)">
+                <div class="option-name">Custom Bespoke</div>
+                <div class="option-desc">Designed according to your exact vision.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FOOD & GASTRONOMY -->
+          <div class="card custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">restaurant</span>
+              <span>Gastronomy & Catering</span>
+            </h3>
+
+            <div class="form-group mb-md">
+              <label class="form-label">Dietary Preference</label>
+              <div class="option-cards-grid" id="food-type-options" role="radiogroup">
+                <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectFoodType('Vegetarian', 400, this)">
+                  <div class="option-name">Vegetarian</div>
+                  <div class="option-price">₹400 / guest</div>
+                </div>
+                <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectFoodType('Non-Vegetarian', 600, this)">
+                  <div class="option-name">Non-Vegetarian</div>
+                  <div class="option-price">₹600 / guest</div>
+                </div>
+                <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectFoodType('Both', 700, this)">
+                  <div class="option-name">Both (Multi-Cuisine)</div>
+                  <div class="option-price">₹700 / guest</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Included Menu Items (Check all that apply)</label>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;" id="food-items-container">
+                <label class="option-card checkbox-card">
+                  <input type="checkbox" value="Starters" checked onchange="validateAndCalculate()">
+                  <div class="option-name">Starters</div>
+                </label>
+                <label class="option-card checkbox-card">
+                  <input type="checkbox" value="Main Course" checked onchange="validateAndCalculate()">
+                  <div class="option-name">Main Course</div>
+                </label>
+                <label class="option-card checkbox-card">
+                  <input type="checkbox" value="Desserts" checked onchange="validateAndCalculate()">
+                  <div class="option-name">Desserts</div>
+                </label>
+                <label class="option-card checkbox-card">
+                  <input type="checkbox" value="Beverages" onchange="validateAndCalculate()">
+                  <div class="option-name">Beverages</div>
+                </label>
+                <label class="option-card checkbox-card">
+                  <input type="checkbox" value="Cake" onchange="validateAndCalculate()">
+                  <div class="option-name">Celebration Cake</div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- MUSIC & ENTERTAINMENT -->
+          <div class="custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">graphic_eq</span>
+              <span>Music & Audio Profile</span>
+            </h3>
+            <div class="option-cards-grid" id="music-options" role="radiogroup">
+              <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectMusic('No Music', 0, this)">
+                <div class="option-name">No Music</div>
+                <div class="option-price">₹0</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectMusic('Background Music', 3000, this)">
+                <div class="option-name">Background Acoustics</div>
+                <div class="option-price">₹3,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectMusic('DJ Console', 8000, this)">
+                <div class="option-name">Professional DJ Console</div>
+                <div class="option-price">₹8,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectMusic('Live Band', 20000, this)">
+                <div class="option-name">Live Acoustic Band</div>
+                <div class="option-price">₹20,000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ENTERTAINMENT ACTS -->
+          <div class="custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">theater_comedy</span>
+              <span>Entertainment Acts</span>
+            </h3>
+            <div class="option-cards-grid" id="entertainment-options" role="radiogroup">
+              <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectEntertainment('None', 0, this)">
+                <div class="option-name">None</div>
+                <div class="option-price">₹0</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectEntertainment('Dance Performance', 5000, this)">
+                <div class="option-name">Dance Troupe</div>
+                <div class="option-price">₹5,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectEntertainment('Interactive Games', 3000, this)">
+                <div class="option-name">Interactive Games Host</div>
+                <div class="option-price">₹3,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectEntertainment('Magic Show', 6000, this)">
+                <div class="option-name">Illusion & Magic Show</div>
+                <div class="option-price">₹6,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectEntertainment('Kids Activities', 4000, this)">
+                <div class="option-name">Kids Activity Station</div>
+                <div class="option-price">₹4,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectEntertainment('Event Host (Emcee)', 7000, this)">
+                <div class="option-name">Professional Emcee</div>
+                <div class="option-price">₹7,000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHOTOGRAPHY & CINEMATOGRAPHY -->
+          <div class="custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">photo_camera</span>
+              <span>Photography & Cinematography</span>
+            </h3>
+            <div class="option-cards-grid" id="photo-options" role="radiogroup">
+              <div class="option-card selected" role="radio" tabindex="0" aria-checked="true" onclick="selectPhoto('None', 0, this)">
+                <div class="option-name">None</div>
+                <div class="option-price">₹0</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectPhoto('Basic Photo', 8000, this)">
+                <div class="option-name">Basic Stills</div>
+                <div class="option-price">₹8,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectPhoto('Photo + Video', 15000, this)">
+                <div class="option-name">Photo + HD Highlight Video</div>
+                <div class="option-price">₹15,000</div>
+              </div>
+              <div class="option-card" role="radio" tabindex="0" aria-checked="false" onclick="selectPhoto('Premium Drone + Cinematic', 25000, this)">
+                <div class="option-name">Cinematic Film + Drone</div>
+                <div class="option-price">₹25,000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADDITIONAL SERVICES -->
+          <div class="card custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">add_task</span>
+              <span>Additional Hospitality Services</span>
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;" id="services-container">
+              <label class="option-card checkbox-card">
+                <input type="checkbox" data-name="Invitation Design" data-price="2000" onchange="validateAndCalculate()">
+                <div class="option-header">
+                  <span class="option-name">Digital Invitations</span>
+                  <span class="option-price">₹2,000</span>
+                </div>
+              </label>
+              <label class="option-card checkbox-card">
+                <input type="checkbox" data-name="Valet Parking Service" data-price="3000" onchange="validateAndCalculate()">
+                <div class="option-header">
+                  <span class="option-name">Valet Parking Staff</span>
+                  <span class="option-price">₹3,000</span>
+                </div>
+              </label>
+              <label class="option-card checkbox-card">
+                <input type="checkbox" data-name="Security Guard Service" data-price="4000" onchange="validateAndCalculate()">
+                <div class="option-header">
+                  <span class="option-name">Private Security</span>
+                  <span class="option-price">₹4,000</span>
+                </div>
+              </label>
+              <label class="option-card checkbox-card">
+                <input type="checkbox" data-name="Special Lighting Package" data-price="6000" onchange="validateAndCalculate()">
+                <div class="option-header">
+                  <span class="option-name">Ambient Special Lighting</span>
+                  <span class="option-price">₹6,000</span>
+                </div>
+              </label>
+              <label class="option-card checkbox-card">
+                <input type="checkbox" data-name="Return Gifts Setup" data-price="50" data-per-guest="true" onchange="validateAndCalculate()">
+                <div class="option-header">
+                  <span class="option-name">Custom Return Gifts</span>
+                  <span class="option-price">₹50 / guest</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- SPECIAL REQUIREMENTS -->
+          <div class="card custom-section">
+            <h3 class="custom-section-title">
+              <span class="material-symbols-outlined text-primary">edit_note</span>
+              <span>Special Requirements & Custom Notes</span>
+            </h3>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="input-special-notes" class="form-label">Custom Requirements (Optional)</label>
+              <textarea id="input-special-notes" class="form-control" placeholder="Mention any specific dietary needs, stage preferences, or special surprise announcements..." oninput="validateAndCalculate()"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: STICKY LIVE PRICE DRAWER (DESKTOP) -->
+        <div>
+          <div class="sticky-price-drawer" aria-live="polite">
+            <div class="price-drawer-header">
+              <span class="subtitle" style="margin-bottom:0;">Live Price Estimate</span>
+              <h3 id="drawer-event-title" style="font-size: 1.3rem;">Birthday Celebration</h3>
+              <p id="drawer-venue-name" style="font-size: 0.85rem; color: var(--primary-terracotta); font-weight: 600;">The Grand Courtyard</p>
+            </div>
+
+            <div class="summary-item">
+              <span class="summary-label">Date & Time</span>
+              <span class="summary-value" id="drawer-date-val">Select Date</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Guests</span>
+              <span class="summary-value" id="drawer-guests-val">100 Guests</span>
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="summary-item">
+              <span class="summary-label">Venue Base</span>
+              <span class="summary-value" id="drawer-venue-price">₹35,000</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Decoration</span>
+              <span class="summary-value" id="drawer-decor-price">₹5,000</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Gastronomy & Food</span>
+              <span class="summary-value" id="drawer-food-price">₹40,000</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Music</span>
+              <span class="summary-value" id="drawer-music-price">₹0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Entertainment</span>
+              <span class="summary-value" id="drawer-entertainment-price">₹0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Photography</span>
+              <span class="summary-value" id="drawer-photo-price">₹0</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Hospitality Services</span>
+              <span class="summary-value" id="drawer-services-price">₹0</span>
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="summary-total">
+              <span class="total-label">TOTAL</span>
+              <span class="total-value" id="drawer-total-price">₹80,000</span>
+            </div>
+
+            <button class="btn btn-primary btn-lg" style="width: 100%;" onclick="proceedToReview()">
+              <span>Review Booking</span>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- MOBILE STICKY BOTTOM SUMMARY BAR -->
+  <div class="mobile-sticky-bar" id="mobile-sticky-bar" aria-live="polite">
+    <div>
+      <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Live Estimate</span>
+      <div class="mobile-price-val" id="mobile-price-val">₹80,000</div>
+    </div>
+    <button class="btn btn-primary" onclick="proceedToReview()">
+      <span>Review Booking</span>
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 EventEase Planning System — Web Technology College Project</p>
+      <div style="display: flex; gap: 1rem;">
+        <a href="admin.html" style="font-weight: 600; color: var(--primary-terracotta);">Admin Console</a>
+        <a href="my-bookings.html">My Bookings</a>
+      </div>
+    </div>
+  </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

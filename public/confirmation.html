@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 5: Booking Confirmed — EventEase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <span>EventEase</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="venues.html" class="nav-link">Venues</a>
+        <a href="my-bookings.html" class="nav-link">My Bookings</a>
+        <a href="admin.html" class="nav-link">Admin Console</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="events.html" class="btn btn-primary">Plan an Event</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROGRESS STEPPER BAR -->
+  <div class="progress-stepper">
+    <div class="container stepper-wrapper">
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info"><span class="step-title">Event</span></div>
+      </div>
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info"><span class="step-title">Venue</span></div>
+      </div>
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info"><span class="step-title">Customize</span></div>
+      </div>
+      <div class="step-item completed">
+        <div class="step-number">✓</div>
+        <div class="step-info"><span class="step-title">Review</span></div>
+      </div>
+      <div class="step-item completed" style="background-color: var(--surface-white); border: 1px solid var(--secondary-sage);">
+        <div class="step-number" style="background-color: var(--secondary-sage); color: white;">✓</div>
+        <div class="step-info">
+          <span class="step-title" style="color: var(--secondary-sage);">Confirmed</span>
+          <span class="step-status" style="color: var(--secondary-sage); font-weight: 600;">Receipt Ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="section">
+    <div class="confirmation-container">
+      
+      <div class="success-icon-wrapper">
+        <span class="material-symbols-outlined">check_circle</span>
+      </div>
+
+      <h1>Booking Confirmed!</h1>
+      <p>Thank you for choosing EventEase. Your celebration reservation has been recorded.</p>
+
+      <!-- TICKET RECEIPT -->
+      <div class="ticket-card" id="ticket-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.85rem; margin-bottom: 1rem;">
+          <div>
+            <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Reservation Reference</span>
+            <h3 id="ticket-id" style="color: var(--primary-terracotta);">EV-XXXXX</h3>
+          </div>
+          <span class="badge badge-confirmed">Confirmed</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Customer Name</span>
+            <strong id="ticket-name" style="display: block;">Aarav Sharma</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Event Type</span>
+            <strong id="ticket-event" style="display: block;">Birthday</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Venue Space</span>
+            <strong id="ticket-venue" style="display: block;">The Grand Courtyard</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Event Date</span>
+            <strong id="ticket-date" style="display: block;">Oct 15, 2026</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Guest Count</span>
+            <strong id="ticket-guests" style="display: block;">100 Guests</strong>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Total Paid / Due</span>
+            <strong id="ticket-amount" style="display: block; color: var(--primary-terracotta); font-size: 1.1rem;">₹0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- JAVASCRIPT EVENT-DRIVEN BOOKING HIGHLIGHT BOX -->
+      <div class="card" style="text-align: left; background-color: #F6FAF7; border-color: #C3DFC9; margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: var(--secondary-sage);">
+          <span class="material-symbols-outlined">hub</span>
+          <strong style="font-size: 1rem;">Event-Driven Architecture (EDA) Pipeline Verification</strong>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-charcoal); margin-bottom: 0.75rem;">
+          When this booking was confirmed, JavaScript triggered the <code>booking.created</code> event. The following handlers responded:
+        </p>
+        <ul style="font-size: 0.85rem; line-height: 1.8; list-style-type: none; padding-left: 0;" id="eda-listeners-list">
+          <li>✔ <strong>saveBooking</strong> — Persisted record to <code>data/bookings.json</code></li>
+          <li>✔ <strong>updateAdmin</strong> — Refreshed total booking count & admin metrics</li>
+          <li>✔ <strong>generateConfirmation</strong> — Generated confirmation token and timestamp</li>
+          <li>✔ <strong>logEvent</strong> — Appended audit log into <code>data/event-log.json</code></li>
+        </ul>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div style="display: flex; justify-content: center; gap: 1rem;">
+        <a href="my-bookings.html" class="btn btn-primary">
+          <span>View My Bookings</span>
+          <span class="material-symbols-outlined">receipt_long</span>
+        </a>
+        <a href="index.html" class="btn btn-secondary">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

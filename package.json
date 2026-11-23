@@ -1,0 +1,13 @@
+{
+  "name": "eventease-platform",
+  "version": "1.0.0",
+  "description": "EventEase - College Event Planning Platform",
+  "scripts": {
+    "start-backend": "cd backend && npm start",
+    "start-frontend": "cd frontend && npm run dev",
+    "seed": "cd backend && node seed.js",
+    "test": "cd backend && npm test",
+    "build": "cd frontend && npm run build",
+    "install-all": "cd backend && npm install && cd ../frontend && npm install"
+  }
+}
